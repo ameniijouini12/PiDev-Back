@@ -20,18 +20,19 @@ public class FormationRestController {
         return formationService.retrieveAllFormations();
     }
 
-    @GetMapping("/retrieve-formations/{id}")
+    @GetMapping("/retrieve-formations/{idFormation}")
     public Formation retrieveFormation(@PathVariable("idFormation") Integer idFormation) {
         return formationService.retrieveFormation(idFormation);
     }
 
     @PostMapping("/add-Formation")
     public Formation addFormation(@RequestBody Formation Formation) {
+
         return formationService.addFormation(Formation);
     }
 
-    @DeleteMapping("/remove-Formation/{formation-id}")
-    public void removeFormation(Integer idFormation) {
+    @DeleteMapping("/remove-Formation/{idFormation}")
+    public void removeFormation(@PathVariable Integer idFormation) {
         formationService.removeFormation(idFormation);
     }
 

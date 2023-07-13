@@ -6,7 +6,7 @@ import com.example.pidevge.Entities.Type;
 import com.example.pidevge.Entities.User;
 import com.example.pidevge.Repositories.BookingRepository;
 import com.example.pidevge.Repositories.EventRepository;
-import com.example.pidevge.Repositories.UserRepository;
+import com.example.pidevge.Repositories.Iuser;
 import com.example.pidevge.interfaces.IBookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BookingServiceImp implements IBookingService {
     private final EventRepository eventRepository;
-    private final UserRepository userRepository;
+    private final Iuser userRepository;
     private final BookingRepository bookingRepository;
     @Override
     public Booking addBooking(int eventId, int userId) {

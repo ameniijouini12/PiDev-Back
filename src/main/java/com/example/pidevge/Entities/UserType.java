@@ -1,6 +1,6 @@
 package com.example.pidevge.Entities;
 
-public enum Role {
+public enum UserType  {
     ADMIN,
     UTILISATEUR,
     FORMATEUR,

@@ -35,6 +35,7 @@ public class AuthService {
                 .numero(request.getNumero())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .userType(request.getUserType())
+                .isActive(true)
                // .userType(UserType.OWNER)
                 //.userType(UserType.DELIVERYPERSON)
                 .build();
@@ -80,12 +81,17 @@ public class AuthService {
                 )
         );
         var user = iuser.findByEmail(request.getEmail()).orElse(null);
-        var jwtToken = jwtService.generateToken(user);
-        revokeAllUserTokens(Optional.ofNullable(user));
-        saveUserToken(user, jwtToken);
-        return AuthResponse.builder()
-                .token(jwtToken)
-                .build();
+        if (!user.getIsActive()) {
+            return AuthResponse.builder().token(null).build();
+        } else {
+            var jwtToken = jwtService.generateToken(user);
+            revokeAllUserTokens(Optional.ofNullable(user));
+            saveUserToken(user, jwtToken);
+            return AuthResponse.builder()
+                    .token(jwtToken)
+                    .build();
+        }
+        
     }
     }
 

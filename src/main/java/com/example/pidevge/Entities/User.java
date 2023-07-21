@@ -69,6 +69,6 @@ public class User implements UserDetails {
         return true;
     }
     public boolean isActive() {
-        return false;
+        return isActive;
     }
 }

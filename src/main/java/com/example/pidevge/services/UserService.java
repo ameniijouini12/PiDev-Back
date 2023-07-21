@@ -19,7 +19,7 @@ public class UserService implements IUserServices {
 
     @Override
     public User addUser(User user) {
-        return iuserRpo.save(user);
+        return iuserRpo.saveAndFlush(user);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class UserService implements IUserServices {
     }
 
     public User updateUser(Integer id, User user) {
-		return iuserRpo.save(user);
+		return iuserRpo.saveAndFlush(user);
 	}
 
 

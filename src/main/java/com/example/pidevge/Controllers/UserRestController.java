@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/AUTH/auth")
 @Slf4j
 public class UserRestController {
@@ -52,11 +54,12 @@ public class UserRestController {
 
     @PostMapping("/add-user")
     public User addUser(@RequestBody User user) {
+        user.setIsActive(true);
         return iUserServices.addUser(user);
     }
 
-    @DeleteMapping("/remove-user/{user-id}")
-    public void removeUser(Integer idUser) {
+    @DeleteMapping("/remove-user/{id}")
+    public void removeUser(@PathVariable("id") Integer idUser) {
         iUserServices.removeUser(idUser);
     }
 
@@ -71,26 +74,26 @@ public class UserRestController {
     public ResponseEntity<String> updateUserStatus(@PathVariable("id") Integer idUser) {
     User user = iUserServices.retrieveUser(idUser);
     if (user != null) {
-        user.setIsActive(user.isEnabled());
+        user.setIsActive(!user.isActive());
         iUserServices.updateUser(idUser, user);
-        String message = user.isEnabled() ? "User account enabled successfully." : "User account disabled successfully.";
-        return ResponseEntity.ok(message);
+        String message = user.isActive() == true ? "User account enabled successfully." : "User account disabled successfully.";
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     } else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
     }
 }
 
 
-@PutMapping("/disable-user-status/{id}")
-    public ResponseEntity<String> disableUserStatus(@PathVariable("id") Integer idUser) {
-    User user = iUserServices.retrieveUser(idUser);
-    if (user != null) {
-        user.setIsActive(!user.isEnabled());
-        iUserServices.updateUser(idUser, user);
-        String message = user.isEnabled() ? "User account disabled successfully." : "User account enabled successfully.";
-        return ResponseEntity.ok(message);
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
-    }
-}
+// @PutMapping("/disable-user-status/{id}")
+//     public ResponseEntity<String> disableUserStatus(@PathVariable("id") Integer idUser) {
+//     User user = iUserServices.retrieveUser(idUser);
+//     if (user != null) {
+//         user.setIsActive(!user.isEnabled());
+//         iUserServices.updateUser(idUser, user);
+//         String message = user.isEnabled() ? "User account disabled successfully." : "User account enabled successfully.";
+//         return ResponseEntity.ok(message);
+//     } else {
+//         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+//     }
+// }
 }

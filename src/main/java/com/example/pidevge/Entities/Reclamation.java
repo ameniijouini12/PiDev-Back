@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class Reclamation implements Serializable {
     @ManyToOne
     private User user;
 
-    private LocalDateTime dateSoumission;
+    private Date date;
 
     @Enumerated(EnumType.STRING)
     private statut statut;

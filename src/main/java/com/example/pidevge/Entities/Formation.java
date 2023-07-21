@@ -2,12 +2,11 @@ package com.example.pidevge.Entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -28,4 +27,8 @@ public class Formation implements Serializable {
     private double coutParticipation;
     private Long idFormateur;
     private int rating;
+
+    @ManyToOne
+    private User user;
+
 }

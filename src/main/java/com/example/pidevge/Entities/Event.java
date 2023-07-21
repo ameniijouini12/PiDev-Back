@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,4 +32,12 @@ public class Event implements Serializable {
     private String affiche;
     @OneToOne(mappedBy = "event",cascade = CascadeType.ALL)
     private Booking booking;
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user;
+    @OneToMany(cascade = CascadeType.ALL)
+    //@JsonIgnore
+    @ToString.Exclude
+    private Set<User> users;
+
 }

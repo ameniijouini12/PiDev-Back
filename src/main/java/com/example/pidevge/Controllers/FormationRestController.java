@@ -5,8 +5,10 @@ import com.example.pidevge.Entities.Formation;
 import com.example.pidevge.interfaces.IFormationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -39,5 +41,23 @@ public class FormationRestController {
     @PutMapping("/update-Formation")
     public Formation updateFormation(@RequestBody Formation Formation) {
         return formationService.updateFormation(Formation);
+    }
+    /*@PutMapping(value="/affecter-formation-user/{idFormation}/{idUser}")
+    public void affectertFormationToUser(@PathVariable("idFormation") Integer idFormation,
+                                                 @PathVariable("idFormation")Integer idUser){
+        formationService.assignFormationToUser(idFormation, idUser);
+    }*/
+
+    @PutMapping(value="/affecter-formation-user/{idFormation}/{idUser}")
+    public void affecterFormationToUser(@PathVariable("idFormation") Integer idFormation,
+                                        @PathVariable("idUser") Integer idUser) {
+        formationService.assignFormationToUser(idFormation, idUser);
+    }
+
+    @GetMapping("/filter-formations")
+    public List<Formation> filterFormations(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate) {
+        return formationService.filterFormationsByCriteria(keyword, startDate);
     }
 }
